@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+<center><h1>Successfully Added</h1></center>
+<?php
+$servername = "localhost";
+$username = "id12220651_root";
+$password = "password";
+$dbname = "id12220651_projtrial";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+if($_SERVER["REQUEST_METHOD"]=="POST"){
+
+
+    $query=$conn->prepare("INSERT IGNORE INTO details(names,course,college,amount,trainer,branch,phone,years) VALUES(?,?,?,?,?,?,?,?)");
+    if(false===$query)
+    {
+        die("unsuccessful".htmlspecialchars($conn->error));
+    }
+    $query->bind_param("ssssssss",$n,$cr,$cl,$a,$t,$b,$p,$y);
+    // echo $query;
+    // $b,$p,$y,$a,$t);  ,board,phone,years
+    if(false===$query)
+    {
+        die("unsuccessful".htmlspecialchars($query->error));
+    }
+    $n=$_POST['name'];
+    $cr=$_POST['course'];
+    $cl=$_POST['college'];
+    $b=$_POST['branch'];
+    $y=$_POST['year'];
+    $p=$_POST['phone'];
+    $a=$_POST['amount'];
+    $t=$_POST['trainer'];
+    // echo $conn->error_list;
+    $query->execute();
+    if(false===$query)
+    {
+        die("unsuccessful".htmlspecialchars($query->error));
+    }
+    // echo $y;
+}
+
+
+
+
+$query->close();
+$conn->close();
+// echo "successful";
+// header('Location:register.html');
+?>
+
+
+
+
+</body>
+</html>
